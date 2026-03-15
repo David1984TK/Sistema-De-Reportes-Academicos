@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import AdminRouter from "./routers/AdminRouter";
+import DocenteRouter from "./routers/DocenteRouter";
+import Login from "./login/Login";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [session, setSession] = useState(() => Boolean(sessionStorage.getItem("token")));
+  const [role, setRole] = useState(() => sessionStorage.getItem("role") || null);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  const handleSetSession = (isLogged, roleValue) => {
+    setSession(isLogged);
+    setRole(roleValue);
+  };
+
+  if (!session) {
+    return <Login setSession={handleSetSession} />;
+  }
+
+  if (role === "administrador") {
+    return <AdminRouter setSession={handleSetSession} />;
+  }
+
+  if (role === "docente") {
+    return <DocenteRouter setSession={handleSetSession} />;
+  }
+
+  // si hay token pero role inválido, forzar cierre y login
+  sessionStorage.removeItem("token");
+  sessionStorage.removeItem("role");
+  return <Login setSession={handleSetSession} />;
 }
-
-export default App
