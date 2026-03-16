@@ -11,7 +11,7 @@ export default function DocenteSideBar({ setSession }) {
   };
 
   return (
-    <div style={{ backgroundColor: "#f0f2f5", minHeight: "100vh", width: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <div style={{ backgroundColor: "#f0f2f5", height: "100vh", width: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       {/* ── Navbar superior ── */}
       <div
         style={{
@@ -39,7 +39,7 @@ export default function DocenteSideBar({ setSession }) {
       </div>
 
       {/* ── Body ── */}
-      <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
+      <div style={{ display: "flex", flex: 1, overflow: "hidden", minHeight: 0 }}>
 
         {/* ── Sidebar ── */}
         <div
@@ -178,7 +178,7 @@ export default function DocenteSideBar({ setSession }) {
         </div>
 
         {/* ── Contenido principal ── */}
-        <div style={{ flex: 1, overflowY: "auto", backgroundColor: "#f0f2f5" }}>
+        <div style={{ flex: 1, overflowY: "auto", backgroundColor: "#f0f2f5", width: 0, minHeight: 0 }}>
           <Outlet />
         </div>
       </div>
