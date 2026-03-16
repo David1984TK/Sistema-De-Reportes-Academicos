@@ -26,45 +26,26 @@ export default function Login({ setSession }) {
 
     setLoading(true);
 
-    // --- Cuando tengas el backend real, reemplaza esto: ---
-    // const res = await fetch("/api/auth/login", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ email, password }),
-    // });
-    // const data = await res.json();
-    // if (!res.ok) {
-    //   setErrors({ password: "Credenciales incorrectas" });
-    //   setLoading(false);
-    //   return;
-    // }
-    // sessionStorage.setItem("token", data.token);
-
-    // Simulación temporal:
-    await new Promise((r) => setTimeout(r, 800));
-
-    const credentials = {
-      "admin@gmail.com": "admin123",
-      "docente@gmail.com": "docente123",
-    };
-
-    const expectedPassword = credentials[email.toLowerCase()];
-
-    if (!expectedPassword || expectedPassword !== password) {
-      setErrors({ password: "Correo o contraseña incorrectos" });
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/sraa-api/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ correo: email, password }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      setErrors({ password: data.message || "Credenciales incorrectas" });
       setLoading(false);
       return;
     }
 
-    const role = email.toLowerCase() === "admin@gmail.com" ? "administrador" : "docente";
-
-    sessionStorage.setItem("token", "demo-token");
-    sessionStorage.setItem("role", role);
+    const { token, rol } = data.data;
+    sessionStorage.setItem("token", token);
+    sessionStorage.setItem("role", rol.toLowerCase());
 
     setLoading(false);
     setSuccess(true);
 
-    setTimeout(() => setSession(true, role), 800);
+    setTimeout(() => setSession(true, rol.toLowerCase() === "admin" ? "administrador" : "docente"), 800);
   };
 
   const onKey = (e) => { if (e.key === "Enter") submit(); };
