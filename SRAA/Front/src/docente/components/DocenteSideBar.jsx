@@ -11,7 +11,7 @@ export default function DocenteSideBar({ setSession }) {
   };
 
   return (
-    <div style={{ backgroundColor: "#f0f2f5", height: "100vh", width: "100vw", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <div style={{ backgroundColor: "#f0f2f5", minHeight: "100vh", width: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       {/* ── Navbar superior ── */}
       <div
         style={{

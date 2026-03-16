@@ -1,0 +1,60 @@
+.actividad-card {
+  background: #fff;
+  border: 0.5px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.actividad-card__info {
+  flex: 1;
+}
+
+.actividad-card__titulo {
+  font-weight: 500;
+  font-size: 15px;
+  margin: 0 0 10px 0;
+}
+
+.actividad-card__meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 2rem;
+  font-size: 13px;
+  color: #666;
+}
+
+.actividad-card__meta strong {
+  color: #111;
+  font-weight: 500;
+}
+
+.actividad-card__acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.actividad-card__boton {
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.actividad-card__boton--detalles {
+  background: #1a6fd4;
+}
+
+.actividad-card__boton--descargar {
+  background: #00ab84;
+}
