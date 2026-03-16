@@ -1,0 +1,355 @@
+.perfil-doc {
+  padding: 20px;
+  display: grid;
+  gap: 12px;
+}
+
+.perfil-doc__title {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  color: #374269;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.perfil-doc__subtitle {
+  margin: 4px 0 0;
+  font-family: 'Inter', sans-serif;
+  color: #52607a;
+  font-size: 13px;
+}
+
+.perfil-doc__card {
+  background-color: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 1px 1px rgba(15, 23, 42, 0.04);
+}
+
+.perfil-doc__hero {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.perfil-doc__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #3b82f6;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 28px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.perfil-doc__avatar-camera {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #3b82f6;
+  border: 2px solid #fff;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 0;
+  color: #fff;
+}
+
+.perfil-doc__name {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: #374269;
+  font-size: 16px;
+}
+
+.perfil-doc__matricula {
+  margin: 3px 0 0;
+  font-family: 'Inter', sans-serif;
+  color: #52607a;
+  font-size: 13px;
+}
+
+.perfil-doc__section-title {
+  margin: 0 0 12px;
+  font-family: 'Inter', sans-serif;
+  color: #374269;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.perfil-doc__section-title--with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.perfil-doc__section-title-icon {
+  color: #3b82f6;
+}
+
+.perfil-doc__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 18px 24px;
+}
+
+.perfil-doc__info {
+  display: grid;
+  gap: 5px;
+}
+
+.perfil-doc__label {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #52607a;
+}
+
+.perfil-doc__value {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  color: #334155;
+  font-size: 16px;
+  line-height: 1.1;
+  font-weight: 500;
+}
+
+.perfil-doc__value--email {
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.perfil-doc__badge {
+  display: inline-block;
+  background-color: #3b82f6;
+  color: #fff;
+  border-radius: 999px;
+  padding: 4px 12px;
+  width: fit-content;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.perfil-doc__security {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.perfil-doc__field {
+  display: grid;
+  gap: 8px;
+}
+
+.perfil-doc__field-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #334155;
+}
+
+.perfil-doc__input {
+  width: 100%;
+  height: 36px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 0 12px;
+  outline: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #334155;
+  box-sizing: border-box;
+}
+
+.perfil-doc__btn-wrap {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.perfil-doc__btn {
+  border: none;
+  border-radius: 10px;
+  background-color: #00ab84;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  padding: 9px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.perfil-doc__modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.perfil-doc__modal {
+  width: min(640px, 100%);
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.2);
+  padding: 16px;
+}
+
+.perfil-doc__modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.perfil-doc__modal-title {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #374269;
+}
+
+.perfil-doc__modal-close {
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-size: 20px;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.perfil-doc__modal-close:hover {
+  background: #f1f5f9;
+}
+
+.perfil-doc__file-input {
+  display: none;
+}
+
+.perfil-doc__dropzone {
+  width: 100%;
+  border: 2px solid #cbd5e1;
+  border-radius: 10px;
+  background: #f8fafc;
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  cursor: pointer;
+  padding: 16px;
+}
+
+.perfil-doc__drop-icon {
+  font-size: 46px;
+  color: #94a3b8;
+}
+
+.perfil-doc__drop-title {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.perfil-doc__drop-text {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #52607a;
+}
+
+.perfil-doc__drop-help {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.perfil-doc__drop-selected {
+  margin: 3px 0 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.perfil-doc__modal-actions {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.perfil-doc__modal-btn {
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.perfil-doc__modal-btn--ghost {
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  color: #64748b;
+}
+
+.perfil-doc__modal-btn--primary {
+  background: #93c5fd;
+  border: 1px solid #93c5fd;
+  color: #fff;
+}
+
+.perfil-doc__modal-btn--primary:enabled {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.perfil-doc__modal-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1220px) {
+  .perfil-doc__security {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 780px) {
+  .perfil-doc {
+    padding: 16px;
+  }
+
+  .perfil-doc__grid,
+  .perfil-doc__security {
+    grid-template-columns: 1fr;
+  }
+
+  .perfil-doc__btn {
+    width: 100%;
+  }
+}

@@ -11,7 +11,7 @@ export default function SidebarAdmin({ setSession }) {
   };
 
   return (
-    <div style={{ backgroundColor: "#f0f2f5", minHeight: "100vh", width: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <div style={{ backgroundColor: "#f0f2f5", height: "100vh", width: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       {/* ── Navbar superior ── */}
       <div style={{ backgroundColor: "#00AB84", height: "48px", display: "flex", alignItems: "center", paddingLeft: "16px", paddingRight: "16px", flexShrink: 0 }}>
         <p style={{ margin: 0, fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "14px", color: "#fff", letterSpacing: "-0.3125px" }}>
@@ -20,7 +20,7 @@ export default function SidebarAdmin({ setSession }) {
       </div>
 
       {/* ── Body ── */}
-      <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
+      <div style={{ display: "flex", flex: 1, overflow: "hidden", minHeight: 0 }}>
 
         {/* ── Sidebar ── */}
         <div style={{ backgroundColor: "#f8fafc", width: "180px", minWidth: "180px", borderRight: "1px solid #e2e8f0", display: "flex", flexDirection: "column", height: "calc(100vh - 48px)", position: "sticky", top: 0 }}>
@@ -83,7 +83,7 @@ export default function SidebarAdmin({ setSession }) {
         </div>
 
         {/* ── Contenido principal ── */}
-        <div style={{ flex: 1, overflowY: "auto", backgroundColor: "#f0f2f5", width: 0 }}>
+        <div style={{ flex: 1, overflowY: "auto", backgroundColor: "#f0f2f5", width: 0, minHeight: 0 }}>
           <Outlet />
         </div>
 
