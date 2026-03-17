@@ -7,24 +7,28 @@ import utez.edu.mx.back.modules.admin.Administrador;
 import utez.edu.mx.back.modules.admin.AdministradorRepository;
 import utez.edu.mx.back.modules.docente.DocentePersonal;
 import utez.edu.mx.back.modules.docente.DocenteRepository;
+import utez.edu.mx.back.modules.usuarios.UsuariosLogin;
+import utez.edu.mx.back.modules.usuarios.UsuariosRepository;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
     private final AdministradorRepository administradorRepository;
     private final DocenteRepository docenteRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UsuariosRepository usuariosRepository;
+
     public DataInitializer(AdministradorRepository administradorRepository,
                            DocenteRepository docenteRepository,
-                           PasswordEncoder passwordEncoder) {
+                           PasswordEncoder passwordEncoder,
+                           UsuariosRepository usuariosRepository) {
         this.administradorRepository = administradorRepository;
         this.docenteRepository = docenteRepository;
         this.passwordEncoder = passwordEncoder;
+        this.usuariosRepository = usuariosRepository;
     }
+
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("==========================================");
-        System.out.println("INICIALIZANDO DATOS DE PRUEBA...");
-        System.out.println("==========================================");
         // Crear ADMIN si no existe
         if (!administradorRepository.existsByCorreo("admin@utez.edu.mx")) {
             Administrador admin = new Administrador(
@@ -32,36 +36,51 @@ public class DataInitializer implements CommandLineRunner {
                     "admin@utez.edu.mx",
                     passwordEncoder.encode("123456")
             );
-            administradorRepository.save(admin);
-            System.out.println("✅ ADMIN creado: admin@utez.edu.mx / 123456");
+            Administrador savedAdmin = administradorRepository.save(admin);
+
+            UsuariosLogin userAdmin = new UsuariosLogin();
+            userAdmin.setCorreo("admin@utez.edu.mx");
+            userAdmin.setPassword(passwordEncoder.encode("123456"));
+            userAdmin.setRol(UsuariosLogin.Rol.ADMIN);
+            userAdmin.setIdReferencia(savedAdmin.getId());
+            userAdmin.setActivo(true);
+            usuariosRepository.save(userAdmin);
         }
-        // Crear DOCENTES si no existen
-        if (!docenteRepository.existsByCorreo("cramirez@utez.edu.mx")) {
+
+        // Crear DOCENTE 1 si no existe
+        if (!docenteRepository.existsByCorreo("docentev@utez.edu.mx")) {
             DocentePersonal docente1 = new DocentePersonal();
-            docente1.setNombre("Carlos Ramírez");
-            docente1.setCorreo("cramirez@utez.edu.mx");
-            docente1.setPassword(passwordEncoder.encode("123456"));
+            docente1.setNombre("Docente v1");
+            docente1.setCorreo("docentev@utez.edu.mx");
             docente1.setIdArea(1L);
             docente1.setActivo(true);
-            docenteRepository.save(docente1);
-            System.out.println("DOCENTE creado: cramirez@utez.edu.mx / 123456");
+            DocentePersonal savedDocente1 = docenteRepository.save(docente1);
+
+            UsuariosLogin userDocente1 = new UsuariosLogin();
+            userDocente1.setCorreo("docentev@utez.edu.mx");
+            userDocente1.setPassword(passwordEncoder.encode("123456"));
+            userDocente1.setRol(UsuariosLogin.Rol.DOCENTE);
+            userDocente1.setIdReferencia(savedDocente1.getId());
+            userDocente1.setActivo(true);
+            usuariosRepository.save(userDocente1);
         }
-        if (!docenteRepository.existsByCorreo("lgonzalez@utez.edu.mx")) {
+
+        // Crear DOCENTE 2 si no existe
+        if (!docenteRepository.existsByCorreo("docentez@utez.edu.mx")) {
             DocentePersonal docente2 = new DocentePersonal();
-            docente2.setNombre("Laura González");
-            docente2.setCorreo("lgonzalez@utez.edu.mx");
-            docente2.setPassword(passwordEncoder.encode("123456"));
+            docente2.setNombre("Docente z");
+            docente2.setCorreo("docentez@utez.edu.mx");
             docente2.setIdArea(2L);
             docente2.setActivo(true);
-            docenteRepository.save(docente2);
-            System.out.println("DOCENTE creado: lgonzalez@utez.edu.mx / 123456");
+            DocentePersonal savedDocente2 = docenteRepository.save(docente2);
+
+            UsuariosLogin userDocente2 = new UsuariosLogin();
+            userDocente2.setCorreo("docentez@utez.edu.mx");
+            userDocente2.setPassword(passwordEncoder.encode("123456"));
+            userDocente2.setRol(UsuariosLogin.Rol.DOCENTE);
+            userDocente2.setIdReferencia(savedDocente2.getId());
+            userDocente2.setActivo(true);
+            usuariosRepository.save(userDocente2);
         }
-        System.out.println("==========================================");
-        System.out.println("DATOS INICIALIZADOS CORRECTAMENTE");
-        System.out.println("==========================================");
-        System.out.println("ADMIN: admin@utez.edu.mx / 123456");
-        System.out.println("DOCENTE 1: cramirez@utez.edu.mx / 123456");
-        System.out.println("DOCENTE 2: lgonzalez@utez.edu.mx / 123456");
-        System.out.println("==========================================");
     }
 }
