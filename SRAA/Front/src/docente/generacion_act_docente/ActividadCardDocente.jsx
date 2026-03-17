@@ -2,7 +2,7 @@ import './ActividadCardDocente.css';
 
 // ActividadCardDocente.jsx
 export default function ActividadCardDocente({ actividad, onVerDetalles, onDescargarReporte }) {
-  const { titulo, fecha, hora, carrera, tipo } = ac
+  const { titulo, fecha, hora, carrera, tipo } = actividad;
   const labelDescarga = tipo === 'Docente' ? 'Descargar Reporte Docente' : 'Descargar Reporte General';
 
   return (

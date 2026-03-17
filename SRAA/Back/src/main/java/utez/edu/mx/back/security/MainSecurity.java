@@ -41,6 +41,7 @@ public class MainSecurity {
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:5173",
                 "http://localhost:3000",
+                "https://sistema-de-reportes-academicos-production-78ae.up.railway.app",
                 "https://sistema-de-reportes-academicos-production.up.railway.app"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));

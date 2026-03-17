@@ -48,6 +48,7 @@ function FileDropzone({ id, label, helpText, accept }) {
 
 export default function ReporteDocenteForm() {
   const [docentes, setDocentes] = useState([""]);
+  const [guardado, setGuardado] = useState(false);
 
   const handleAddDocente = () => {
     setDocentes((prev) => [...prev, ""]);
@@ -143,10 +144,25 @@ export default function ReporteDocenteForm() {
       </section>
 
       <section className="rdf__section rdf__section--button">
-        <button type="button" className="rdf__save-btn">
+        <button type="button" className="rdf__save-btn" onClick={() => setGuardado(true)}>
           Guardar Reporte de Desarrollo Docente
         </button>
       </section>
+
+      {guardado && (
+        <div className="rdf__modal-overlay" onClick={() => setGuardado(false)}>
+          <div className="rdf__modal" onClick={(e) => e.stopPropagation()}>
+            <div className="rdf__modal-icon">
+              <i className="bi bi-check-circle-fill" />
+            </div>
+            <h3 className="rdf__modal-title">Reporte guardado</h3>
+            <p className="rdf__modal-text">El reporte de desarrollo docente se ha guardado correctamente.</p>
+            <button type="button" className="rdf__modal-btn" onClick={() => setGuardado(false)}>
+              Aceptar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

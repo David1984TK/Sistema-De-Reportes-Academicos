@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Login.css";
+import { apiRequest } from "../api/httpClient";
 
 function validate(email, password) {
   const e = {};
@@ -26,26 +27,36 @@ export default function Login({ setSession }) {
 
     setLoading(true);
 
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/sraa-api/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ correo: email, password }),
-    });
-    const data = await res.json();
-    if (!res.ok) {
-      setErrors({ password: data.message || "Credenciales incorrectas" });
+    try {
+      const response = await apiRequest("/auth/login", {
+        method: "POST",
+        auth: false,
+        body: {
+          correo: email,
+          password,
+        },
+      });
+
+      const data = response?.data;
+
+      if (!data?.token || !data?.rol) {
+        throw new Error("Respuesta de autenticacion incompleta");
+      }
+
+      sessionStorage.setItem("token", data.token);
+      sessionStorage.setItem("role", data.rol);
+      sessionStorage.setItem("correo", data.correo || email);
+      if (data.nombre) {
+        sessionStorage.setItem("nombre", data.nombre);
+      }
+
+      setSuccess(true);
+      setTimeout(() => setSession(true, data.rol), 800);
+    } catch (error) {
+      setErrors({ password: error.message || "Credenciales incorrectas" });
+    } finally {
       setLoading(false);
-      return;
     }
-
-    const { token, rol } = data.data;
-    sessionStorage.setItem("token", token);
-    sessionStorage.setItem("role", rol.toLowerCase());
-
-    setLoading(false);
-    setSuccess(true);
-
-    setTimeout(() => setSession(true, rol.toLowerCase() === "admin" ? "administrador" : "docente"), 800);
   };
 
   const onKey = (e) => { if (e.key === "Enter") submit(); };

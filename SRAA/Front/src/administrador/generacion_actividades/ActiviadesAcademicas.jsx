@@ -2,12 +2,14 @@ import { useState } from "react";
 import "./ActiviadesAcademicas.css";
 import FiltrosBusqueda from "./FiltrosBusqueda";
 import ActividadCard from "./ActividadCard";
+import DetalleActividadModal from "./DetalleActividadModal";
 
 export default function ActividadesAcademicas() {
   const [actividades, setActividades] = useState([
     { id: 1, titulo: 'Actividad 1', fecha: '2026-03-10', hora: '09:00', carrera: 'IIN', tipo: 'General' },
     { id: 2, titulo: 'Actividad 2', fecha: '2026-03-12', hora: '11:00', carrera: 'DS', tipo: 'Docente' },
   ]);
+  const [actividadSeleccionada, setActividadSeleccionada] = useState(null);
 
   const handleBuscar = async (filtros) => {
     // aquí después conectas con tu backend
@@ -30,12 +32,17 @@ export default function ActividadesAcademicas() {
             <ActividadCard
               key={actividad.id}
               actividad={actividad}
-              onVerDetalles={(a) => console.log('Ver:', a)}
+              onVerDetalles={setActividadSeleccionada}
               onDescargarReporte={(a) => console.log('Descargar:', a)}
             />
           ))}
         </div>
       </div>
+
+      <DetalleActividadModal
+        actividad={actividadSeleccionada}
+        onClose={() => setActividadSeleccionada(null)}
+      />
     </main>
   );
 }

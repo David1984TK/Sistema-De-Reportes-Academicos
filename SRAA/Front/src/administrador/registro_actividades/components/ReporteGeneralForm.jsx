@@ -48,6 +48,7 @@ function EvidenceDropzone({ fileInputRef, onPickFiles, onChangeFiles, selectedFi
 export default function ReporteGeneralForm() {
   const evidenceInputRef = useRef(null);
   const [selectedEvidenceFiles, setSelectedEvidenceFiles] = useState([]);
+  const [guardado, setGuardado] = useState(false);
 
   const handlePickEvidenceFiles = () => {
     evidenceInputRef.current?.click();
@@ -212,10 +213,25 @@ export default function ReporteGeneralForm() {
       </section>
 
       <section className="rgf__section rgf__section--button">
-        <button type="button" className="rgf__save-btn">
+        <button type="button" className="rgf__save-btn" onClick={() => setGuardado(true)}>
           Guardar Reporte General
         </button>
       </section>
+
+      {guardado && (
+        <div className="rgf__modal-overlay" onClick={() => setGuardado(false)}>
+          <div className="rgf__modal" onClick={(e) => e.stopPropagation()}>
+            <div className="rgf__modal-icon">
+              <i className="bi bi-check-circle-fill" />
+            </div>
+            <h3 className="rgf__modal-title">Reporte guardado</h3>
+            <p className="rgf__modal-text">El reporte general se ha guardado correctamente.</p>
+            <button type="button" className="rgf__modal-btn" onClick={() => setGuardado(false)}>
+              Aceptar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

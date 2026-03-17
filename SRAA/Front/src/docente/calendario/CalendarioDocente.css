@@ -1,0 +1,178 @@
+.cal {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-sizing: border-box;
+}
+
+.cal__encabezado {
+  display: flex;
+  flex-direction: column;
+}
+
+.cal__titulo {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  font-family: 'Inter', sans-serif;
+  color: #1e293b;
+}
+
+.cal__descripcion {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Card contenedor */
+.cal__card {
+  background: #fff;
+  border: 0.5px solid #e0e0e0;
+  border-radius: 14px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Navegacion mes */
+.cal__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cal__mes-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.cal__nav-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.cal__nav-btn {
+  background: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #475569;
+  transition: background 0.15s;
+}
+
+.cal__nav-btn:hover {
+  background: #f1f5f9;
+}
+
+/* Grid del calendario */
+.cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-top: 1px solid #e2e8f0;
+  border-left: 1px solid #e2e8f0;
+}
+
+.cal__dia-header {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  text-align: center;
+  padding: 10px 0;
+  background: #f8fafc;
+  border-right: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.cal__celda {
+  min-height: 90px;
+  padding: 6px 8px;
+  border-right: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  vertical-align: top;
+}
+
+.cal__celda--vacia {
+  background: #fafafa;
+}
+
+.cal__numero {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.cal__eventos {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cal__evento {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
+}
+
+.cal__evento--taller {
+  background: #3b82f6;
+}
+
+.cal__evento--conferencia {
+  background: #374151;
+}
+
+/* Leyenda */
+.cal__leyenda {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-top: 4px;
+}
+
+.cal__leyenda-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #475569;
+}
+
+.cal__leyenda-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.cal__leyenda-dot--taller {
+  background: #3b82f6;
+}
+
+.cal__leyenda-dot--conferencia {
+  background: #374151;
+}

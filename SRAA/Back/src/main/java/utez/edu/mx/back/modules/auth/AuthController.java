@@ -7,7 +7,6 @@ import utez.edu.mx.back.modules.auth.dtos.LoginRequestDTO;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
     private final AuthService authService;
     public AuthController(AuthService authService) {

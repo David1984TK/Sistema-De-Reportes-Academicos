@@ -156,3 +156,79 @@
   padding: 14px 32px;
   cursor: pointer;
 }
+
+/* Modal de confirmacion */
+.rdf__modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: rdf-fade 0.15s ease;
+}
+
+@keyframes rdf-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.rdf__modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 36px 32px 28px;
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.18);
+  animation: rdf-slide 0.18s ease;
+}
+
+@keyframes rdf-slide {
+  from { transform: translateY(14px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.rdf__modal-icon {
+  font-size: 52px;
+  color: #22c55e;
+  line-height: 1;
+}
+
+.rdf__modal-title {
+  margin: 4px 0 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.rdf__modal-text {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #64748b;
+  text-align: center;
+}
+
+.rdf__modal-btn {
+  margin-top: 8px;
+  border: none;
+  border-radius: 10px;
+  background: #3b82f6;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  padding: 12px 40px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.rdf__modal-btn:hover {
+  background: #2563eb;
+}
