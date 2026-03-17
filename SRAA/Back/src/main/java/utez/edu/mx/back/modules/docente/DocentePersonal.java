@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import utez.edu.mx.back.kernel.BaseEntity;
 
 @Entity
-@Table(name = "docente_personal")
+@Table(name = "DOCENTE_PERSONAL")
 public class DocentePersonal extends BaseEntity {
     @Column(name = "nombre", nullable = false)
     private String nombre;
