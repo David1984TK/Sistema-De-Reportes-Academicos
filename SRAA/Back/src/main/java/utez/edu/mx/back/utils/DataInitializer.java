@@ -52,6 +52,7 @@ public class DataInitializer implements CommandLineRunner {
             DocentePersonal docente1 = new DocentePersonal();
             docente1.setNombre("Docente v1");
             docente1.setCorreo("docentev@utez.edu.mx");
+            docente1.setPassword(passwordEncoder.encode("123456"));
             docente1.setIdArea(1L);
             docente1.setActivo(true);
             DocentePersonal savedDocente1 = docenteRepository.save(docente1);
@@ -70,6 +71,7 @@ public class DataInitializer implements CommandLineRunner {
             DocentePersonal docente2 = new DocentePersonal();
             docente2.setNombre("Docente z");
             docente2.setCorreo("docentez@utez.edu.mx");
+            docente2.setPassword(passwordEncoder.encode("123456"));
             docente2.setIdArea(2L);
             docente2.setActivo(true);
             DocentePersonal savedDocente2 = docenteRepository.save(docente2);
