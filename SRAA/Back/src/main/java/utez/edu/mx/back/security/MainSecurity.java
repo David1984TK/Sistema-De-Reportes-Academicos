@@ -40,7 +40,8 @@ public class MainSecurity {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:5173",
-                "https://sistema-de-reportes-academicos-production-78ae.up.railway.app"
+                "http://localhost:3000",
+                "https://sistema-de-reportes-academicos-production.up.railway.app"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
