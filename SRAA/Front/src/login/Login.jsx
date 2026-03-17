@@ -10,7 +10,7 @@ function validate(email, password) {
   else if (password.length < 6) e.password = "Mínimo 6 caracteres";
   return e;
 }
-
+// si
 // Se recibe setSession como prop
 export default function Login({ setSession }) {
   const [email, setEmail] = useState("");

@@ -26,7 +26,7 @@ function getDiasDelMes(year, month) {
   for (let d = 1; d <= totalDias; d++) celdas.push(d);
   return celdas;
 }
-
+// .
 export default function CalendarioDocente() {
   const hoy = new Date();
   const [year, setYear] = useState(hoy.getFullYear());

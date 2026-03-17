@@ -148,7 +148,7 @@ export default function ReporteGeneralFormDoc() {
           <InputDoc label="Total docentes + administrativos" placeholder="Se calcula automaticamente" />
         </div>
       </section>
-
+            //solo ocupo hacer el comit :v
       <section className="rgfd__section">
         <h4 className="rgfd__title">6. ESTUDIANTES POR PROGRAMA EDUCATIVO</h4>
         <div className="rgfd__program-grid">
