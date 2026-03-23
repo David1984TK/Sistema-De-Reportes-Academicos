@@ -60,6 +60,8 @@ public class ReportePDDService {
         reporte.setHorasDuracion(dto.getHorasDuracion());
         reporte.setDocentesHombres(dto.getDocentesHombres());
         reporte.setDocentesMujeres(dto.getDocentesMujeres());
+        reporte.setDivision(dto.getDivision());
+        reporte.setCarrera(dto.getCarrera());
         reporte.setNotas(dto.getNotas());
         reporte.setEstadoRegistro("borrador");
         reporte.setIdDocenteRegistra(idDocente);

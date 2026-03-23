@@ -44,6 +44,12 @@ public class ReportePDD {
     @Column(name = "docentes_hombres") private Integer docentesHombres = 0;
     @Column(name = "docentes_mujeres") private Integer docentesMujeres = 0;
 
+    @Column(name = "division", length = 100)
+    private String division;
+
+    @Column(name = "carrera", length = 100)
+    private String carrera;
+
     @Column(name = "notas", columnDefinition = "TEXT")
     private String notas;
 
@@ -85,6 +91,10 @@ public class ReportePDD {
     public void setDocentesHombres(Integer v) { this.docentesHombres = v; }
     public Integer getDocentesMujeres() { return docentesMujeres; }
     public void setDocentesMujeres(Integer v) { this.docentesMujeres = v; }
+    public String getDivision() { return division; }
+    public void setDivision(String v) { this.division = v; }
+    public String getCarrera() { return carrera; }
+    public void setCarrera(String v) { this.carrera = v; }
     public String getNotas() { return notas; }
     public void setNotas(String v) { this.notas = v; }
     public String getEstadoRegistro() { return estadoRegistro; }

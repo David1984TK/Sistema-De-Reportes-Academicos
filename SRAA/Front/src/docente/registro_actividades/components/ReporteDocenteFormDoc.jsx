@@ -53,35 +53,36 @@ function FileDropzoneDoc({ id, label, helpText, accept, files, onChangeFiles }) 
 }
 
 const INITIAL_FORM = {
-  nombreCurso: "", objetivo: "", folioPdd: "", numeroActividad: "",
+  nombreCurso: "", objetivo: "",
   facilitador: "", datosContactoFacilitador: "",
-  fechaInicio: "", fechaFin: "", horasDuracion: 0,
-  docentesHombres: 0, docentesMujeres: 0,
+  fechaInicio: "", fechaFin: "",
+  division: "", carrera: "",
   notas: "",
 };
 
 export default function ReporteDocenteFormDoc() {
   const [form, setForm] = useState({ ...INITIAL_FORM });
-  const [participantes, setParticipantes] = useState([{ nombreExterno: "", tipo: "capacitado" }]);
+  const [docentes, setDocentes] = useState([""]);
   const [guardado, setGuardado] = useState(false);
   const [enviando, setEnviando] = useState(false);
   const [error, setError] = useState("");
   const [evidencias, setEvidencias] = useState([]);
   const [constancias, setConstancias] = useState([]);
+  const [anexos, setAnexos] = useState([]);
 
   const set = (campo) => (valor) => setForm((prev) => ({ ...prev, [campo]: valor }));
 
-  const handleAddParticipante = () => {
-    setParticipantes((prev) => [...prev, { nombreExterno: "", tipo: "capacitado" }]);
+  const handleAddDocente = () => {
+    setDocentes((prev) => [...prev, ""]);
   };
 
-  const handleParticipanteChange = (index, field, value) => {
-    setParticipantes((prev) => prev.map((item, idx) => idx === index ? { ...item, [field]: value } : item));
+  const handleDocenteChange = (index, value) => {
+    setDocentes((prev) => prev.map((item, idx) => (idx === index ? value : item)));
   };
 
-  const handleRemoveParticipante = (index) => {
-    if (participantes.length <= 1) return;
-    setParticipantes((prev) => prev.filter((_, idx) => idx !== index));
+  const handleRemoveDocente = (index) => {
+    if (docentes.length <= 1) return;
+    setDocentes((prev) => prev.filter((_, idx) => idx !== index));
   };
 
   const handleGuardar = async () => {
@@ -92,31 +93,29 @@ export default function ReporteDocenteFormDoc() {
     setEnviando(true);
     setError("");
 
-    const listaParticipantes = participantes
-      .filter((p) => p.nombreExterno.trim() !== "")
-      .map((p) => ({ nombreExterno: p.nombreExterno, tipo: p.tipo }));
+    const participantes = docentes
+      .filter((nombre) => nombre.trim() !== "")
+      .map((nombre) => ({ nombreExterno: nombre, tipo: "capacitado" }));
 
     const payload = {
       nombreCurso: form.nombreCurso,
       objetivo: form.objetivo || "Sin objetivo especificado",
-      folioPdd: form.folioPdd,
-      numeroActividad: form.numeroActividad,
-      facilitador: form.facilitador,
+      facilitador: form.facilitador || "Sin especificar",
       datosContactoFacilitador: form.datosContactoFacilitador,
       fechaInicio: form.fechaInicio,
       fechaFin: form.fechaFin,
-      horasDuracion: form.horasDuracion,
-      docentesHombres: form.docentesHombres,
-      docentesMujeres: form.docentesMujeres,
+      division: form.division,
+      carrera: form.carrera,
       notas: form.notas,
-      participantes: listaParticipantes,
+      numeroActividad: 0,
+      participantes,
     };
 
     try {
       await apiRequest("/reportes-pdd", { method: "POST", body: payload });
       setGuardado(true);
       setForm({ ...INITIAL_FORM });
-      setParticipantes([{ nombreExterno: "", tipo: "capacitado" }]);
+      setDocentes([""]);
     } catch (err) {
       setError(err.message || "Error al guardar el reporte");
     } finally {
@@ -131,31 +130,23 @@ export default function ReporteDocenteFormDoc() {
         <div className="rdfd__stack">
           <label className="rdfd__label">Personal docente (participante/capacitado o certificado)</label>
           <div className="rdfd__stack">
-            {participantes.map((participante, index) => (
-              <div key={`part-${index}`} className="rdfd__participante-row">
+            {docentes.map((docente, index) => (
+              <div key={`docente-${index}`} className="rdfd__participante-row">
                 <input
                   type="text"
-                  value={participante.nombreExterno}
-                  onChange={(e) => handleParticipanteChange(index, "nombreExterno", e.target.value)}
+                  value={docente}
+                  onChange={(event) => handleDocenteChange(index, event.target.value)}
                   placeholder={`Nombre completo del docente ${index + 1}`}
                   className="rdfd__input"
                 />
-                <select
-                  value={participante.tipo}
-                  onChange={(e) => handleParticipanteChange(index, "tipo", e.target.value)}
-                  className="rdfd__input rdfd__input--select"
-                >
-                  <option value="capacitado">Capacitado</option>
-                  <option value="certificado">Certificado</option>
-                </select>
-                {participantes.length > 1 && (
-                  <button type="button" onClick={() => handleRemoveParticipante(index)} className="rdfd__remove-btn">
+                {docentes.length > 1 && (
+                  <button type="button" onClick={() => handleRemoveDocente(index)} className="rdfd__remove-btn">
                     <i className="bi bi-trash" />
                   </button>
                 )}
               </div>
             ))}
-            <button type="button" onClick={handleAddParticipante} className="rdfd__add-docente">
+            <button type="button" onClick={handleAddDocente} className="rdfd__add-docente">
               + Agregar docente
             </button>
           </div>
@@ -179,21 +170,10 @@ export default function ReporteDocenteFormDoc() {
           </div>
           <InputDoc label="Nombre del curso" placeholder="Nombre completo del curso o capacitacion" value={form.nombreCurso} onChange={set("nombreCurso")} />
           <div className="rdfd__grid">
-            <InputDoc label="Folio PDD" placeholder="Folio del programa" value={form.folioPdd} onChange={set("folioPdd")} />
-            <InputDoc label="Numero de actividad" placeholder="Numero" value={form.numeroActividad} onChange={set("numeroActividad")} />
+            <InputDoc label="Division Academica" placeholder="" value={form.division} onChange={set("division")} />
+            <InputDoc label="Carrera" placeholder="" value={form.carrera} onChange={set("carrera")} />
           </div>
-          <InputDoc label="Horas de duracion" placeholder="0" type="number" value={form.horasDuracion} onChange={set("horasDuracion")} />
           <TextareaDoc label="Objetivo" placeholder="Descripcion del objetivo del curso" rows={5} large value={form.objetivo} onChange={set("objetivo")} />
-        </div>
-      </section>
-
-      <section className="rdfd__section">
-        <h4 className="rdfd__title">Estadisticas de Participacion</h4>
-        <div className="rdfd__stack">
-          <div className="rdfd__grid">
-            <InputDoc label="Docentes Hombres" placeholder="0" type="number" value={form.docentesHombres} onChange={set("docentesHombres")} />
-            <InputDoc label="Docentes Mujeres" placeholder="0" type="number" value={form.docentesMujeres} onChange={set("docentesMujeres")} />
-          </div>
         </div>
       </section>
 
@@ -215,6 +195,14 @@ export default function ReporteDocenteFormDoc() {
             accept=".pdf,.doc,.docx"
             files={constancias}
             onChangeFiles={(e) => setConstancias(Array.from(e.target.files || []))}
+          />
+          <FileDropzoneDoc
+            id="doc-anexos"
+            label="Anexos"
+            helpText="o arrastra y suelta archivos de cualquier tipo"
+            accept="*"
+            files={anexos}
+            onChangeFiles={(e) => setAnexos(Array.from(e.target.files || []))}
           />
         </div>
       </section>
