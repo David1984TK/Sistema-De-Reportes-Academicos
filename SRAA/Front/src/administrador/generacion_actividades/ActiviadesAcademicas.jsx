@@ -53,6 +53,11 @@ export default function ActividadesAcademicas() {
     }
   };
 
+  const handleDescargar = (actividad) => {
+    // por ahora solo avisa, cuando el endpoint de generacion este listo se conecta
+    alert(`Descarga de reporte ${actividad.tipoReporte} aun no disponible`);
+  };
+
   const handleBuscar = (filtros) => {
     let resultado = [...actividades, ...reportesPdd];
 
@@ -109,6 +114,7 @@ export default function ActividadesAcademicas() {
                 key={actividad.idActividad || actividad.idReportePdd || index}
                 actividad={actividad}
                 onVerDetalles={setActividadSeleccionada}
+                onDescargar={handleDescargar}
               />
             ))
           )}

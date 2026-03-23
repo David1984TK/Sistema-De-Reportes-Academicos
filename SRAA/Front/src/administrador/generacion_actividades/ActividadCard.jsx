@@ -1,7 +1,9 @@
 import './ActividadCard.css';
 
-export default function ActividadCard({ actividad, onVerDetalles }) {
+export default function ActividadCard({ actividad, onVerDetalles, onDescargar }) {
   const { titulo, fecha, division, tipoReporte } = actividad;
+
+  const labelDescarga = tipoReporte === 'Docente' ? 'Descargar Reporte Docente' : 'Descargar Reporte General';
 
   return (
     <div className="actividad-card">
@@ -18,6 +20,10 @@ export default function ActividadCard({ actividad, onVerDetalles }) {
         <button onClick={() => onVerDetalles(actividad)} className="actividad-card__boton actividad-card__boton--detalles">
           <i className="bi bi-eye"></i>
           Ver Detalles
+        </button>
+        <button onClick={() => onDescargar(actividad)} className="actividad-card__boton actividad-card__boton--descargar">
+          <i className="bi bi-download"></i>
+          {labelDescarga}
         </button>
       </div>
     </div>
