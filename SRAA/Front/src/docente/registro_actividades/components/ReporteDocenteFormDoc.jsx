@@ -231,11 +231,8 @@ export default function ReporteDocenteFormDoc() {
       {guardado && (
         <div className="rdfd__modal-overlay" onClick={() => setGuardado(false)}>
           <div className="rdfd__modal" onClick={(e) => e.stopPropagation()}>
-            <div className="rdfd__modal-icon">
-              <i className="bi bi-check-circle-fill" />
-            </div>
             <h3 className="rdfd__modal-title">Reporte guardado</h3>
-            <p className="rdfd__modal-text">El reporte de desarrollo docente se ha guardado correctamente.</p>
+            <p className="rdfd__modal-text">El reporte de desarrollo docente se guardo correctamente.</p>
             <button type="button" className="rdfd__modal-btn" onClick={() => setGuardado(false)}>
               Aceptar
             </button>

@@ -290,9 +290,8 @@ export default function ReporteGeneralForm() {
       {guardado && (
         <div className="rgf__modal-overlay" onClick={() => setGuardado(false)}>
           <div className="rgf__modal" onClick={(e) => e.stopPropagation()}>
-            <div className="rgf__modal-icon"><i className="bi bi-check-circle-fill" /></div>
             <h3 className="rgf__modal-title">Reporte guardado</h3>
-            <p className="rgf__modal-text">El reporte general se ha guardado correctamente.</p>
+            <p className="rgf__modal-text">El reporte general se guardo correctamente.</p>
             <button type="button" className="rgf__modal-btn" onClick={() => setGuardado(false)}>Aceptar</button>
           </div>
         </div>

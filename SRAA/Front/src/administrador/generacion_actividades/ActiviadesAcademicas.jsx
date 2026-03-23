@@ -22,11 +22,11 @@ export default function ActividadesAcademicas() {
     setCargando(true);
     try {
       const [resAct, resPdd] = await Promise.all([
-        apiRequest("/actividades").catch(() => ({ result: [] })),
-        apiRequest("/reportes-pdd").catch(() => ({ result: [] })),
+        apiRequest("/actividades").catch(() => ({ data: [] })),
+        apiRequest("/reportes-pdd").catch(() => ({ data: [] })),
       ]);
 
-      const acts = (resAct.result || []).map((a) => ({
+      const acts = (resAct.data || []).map((a) => ({
         ...a,
         tipoReporte: "General",
         titulo: a.nombre,
@@ -34,7 +34,7 @@ export default function ActividadesAcademicas() {
         division: divisionNombres[a.idArea] || "",
       }));
 
-      const pdds = (resPdd.result || []).map((r) => ({
+      const pdds = (resPdd.data || []).map((r) => ({
         ...r,
         tipoReporte: "Docente",
         titulo: r.nombreCurso,
