@@ -1,10 +1,7 @@
 import './ActividadCard.css';
 
-// ActividadCard.jsx
-export default function ActividadCard({ actividad, onVerDetalles, onDescargarReporte }) {
-  const { titulo, fecha, hora, carrera, tipo } = actividad;
-
-  const labelDescarga = tipo === 'Docente' ? 'Descargar Reporte Docente' : 'Descargar Reporte General';
+export default function ActividadCard({ actividad, onVerDetalles }) {
+  const { titulo, fecha, division, tipoReporte } = actividad;
 
   return (
     <div className="actividad-card">
@@ -12,9 +9,8 @@ export default function ActividadCard({ actividad, onVerDetalles, onDescargarRep
         <p className="actividad-card__titulo">{titulo}</p>
         <div className="actividad-card__meta">
           <span>Fecha: {fecha}</span>
-          <span>Hora: {hora}</span>
-          <span>Carrera: {carrera}</span>
-          <span>Tipo: {tipo}</span>
+          {division && <span>División: {division}</span>}
+          <span>Tipo: {tipoReporte}</span>
         </div>
       </div>
 
@@ -22,10 +18,6 @@ export default function ActividadCard({ actividad, onVerDetalles, onDescargarRep
         <button onClick={() => onVerDetalles(actividad)} className="actividad-card__boton actividad-card__boton--detalles">
           <i className="bi bi-eye"></i>
           Ver Detalles
-        </button>
-        <button onClick={() => onDescargarReporte(actividad)} className="actividad-card__boton actividad-card__boton--descargar">
-          <i className="bi bi-download"></i>
-          {labelDescarga}
         </button>
       </div>
     </div>

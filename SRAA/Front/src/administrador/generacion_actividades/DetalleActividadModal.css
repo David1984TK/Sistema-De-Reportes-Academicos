@@ -18,7 +18,10 @@
   background: #fff;
   border-radius: 14px;
   width: 100%;
-  max-width: 460px;
+  max-width: 580px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
   box-shadow: 0 20px 60px rgba(15, 23, 42, 0.18);
   animation: dam-slide-up 0.18s ease;
   overflow: hidden;
@@ -67,7 +70,22 @@
   padding: 20px 24px 24px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.dam__section-title {
+  margin: 12px 0 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #374269;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 6px;
+}
+
+.dam__section-title:first-child {
+  margin-top: 0;
 }
 
 .dam__field {

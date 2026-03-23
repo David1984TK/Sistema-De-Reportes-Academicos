@@ -1,19 +1,90 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { apiRequest } from "../../api/httpClient";
 import "./ActiviadesAcademicas.css";
 import FiltrosBusqueda from "./FiltrosBusqueda";
 import ActividadCard from "./ActividadCard";
 import DetalleActividadModal from "./DetalleActividadModal";
 
 export default function ActividadesAcademicas() {
-  const [actividades, setActividades] = useState([
-    { id: 1, titulo: 'Actividad 1', fecha: '2026-03-10', hora: '09:00', carrera: 'IIN', tipo: 'General' },
-    { id: 2, titulo: 'Actividad 2', fecha: '2026-03-12', hora: '11:00', carrera: 'DS', tipo: 'Docente' },
-  ]);
+  const [actividades, setActividades] = useState([]);
+  const [reportesPdd, setReportesPdd] = useState([]);
+  const [todasLasActividades, setTodasLasActividades] = useState([]);
   const [actividadSeleccionada, setActividadSeleccionada] = useState(null);
+  const [cargando, setCargando] = useState(true);
 
-  const handleBuscar = async (filtros) => {
-    // aquí después conectas con tu backend
-    console.log("Buscando con filtros:", filtros);
+  const divisionNombres = { 1: "DACEA", 2: "DAMI", 3: "DATEFI", 4: "DATID" };
+
+  useEffect(() => {
+    cargarDatos();
+  }, []);
+
+  const cargarDatos = async () => {
+    setCargando(true);
+    try {
+      const [resAct, resPdd] = await Promise.all([
+        apiRequest("/actividades").catch(() => ({ result: [] })),
+        apiRequest("/reportes-pdd").catch(() => ({ result: [] })),
+      ]);
+
+      const acts = (resAct.result || []).map((a) => ({
+        ...a,
+        tipoReporte: "General",
+        titulo: a.nombre,
+        fecha: a.fechaInicio,
+        division: divisionNombres[a.idArea] || "",
+      }));
+
+      const pdds = (resPdd.result || []).map((r) => ({
+        ...r,
+        tipoReporte: "Docente",
+        titulo: r.nombreCurso,
+        fecha: r.fechaInicio,
+        division: r.division || "",
+        carrera: r.carrera || "",
+      }));
+
+      setActividades(acts);
+      setReportesPdd(pdds);
+      setTodasLasActividades([...acts, ...pdds]);
+    } catch (err) {
+      console.error("Error cargando actividades:", err);
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  const handleBuscar = (filtros) => {
+    let resultado = [...actividades, ...reportesPdd];
+
+    if (filtros.divisionAcademica) {
+      resultado = resultado.filter((a) => a.division === filtros.divisionAcademica);
+    }
+
+    if (filtros.carrera) {
+      const carreraFiltro = filtros.carrera.toLowerCase();
+      resultado = resultado.filter((a) => {
+        if (a.tipoReporte === "General" && a.participaciones) {
+          return a.participaciones.some((p) => p.programa.toLowerCase() === carreraFiltro);
+        }
+        if (a.tipoReporte === "Docente") {
+          return (a.carrera || "").toLowerCase() === carreraFiltro;
+        }
+        return false;
+      });
+    }
+
+    if (filtros.tipoReporte) {
+      resultado = resultado.filter((a) => a.tipoReporte === filtros.tipoReporte);
+    }
+
+    if (filtros.fechaInicio) {
+      resultado = resultado.filter((a) => a.fecha >= filtros.fechaInicio);
+    }
+    if (filtros.fechaFin) {
+      resultado = resultado.filter((a) => a.fecha <= filtros.fechaFin);
+    }
+
+    setTodasLasActividades(resultado);
   };
 
   return (
@@ -28,14 +99,19 @@ export default function ActividadesAcademicas() {
       <div className="actividades-academicas__resultado">
         <h2 className="actividades-academicas__resultado-titulo">Actividades Encontradas</h2>
         <div className="actividades-academicas__lista">
-          {actividades.map((actividad) => (
-            <ActividadCard
-              key={actividad.id}
-              actividad={actividad}
-              onVerDetalles={setActividadSeleccionada}
-              onDescargarReporte={(a) => console.log('Descargar:', a)}
-            />
-          ))}
+          {cargando ? (
+            <p className="actividades-academicas__mensaje">Cargando actividades...</p>
+          ) : todasLasActividades.length === 0 ? (
+            <p className="actividades-academicas__mensaje">No se encontraron actividades registradas</p>
+          ) : (
+            todasLasActividades.map((actividad, index) => (
+              <ActividadCard
+                key={actividad.idActividad || actividad.idReportePdd || index}
+                actividad={actividad}
+                onVerDetalles={setActividadSeleccionada}
+              />
+            ))
+          )}
         </div>
       </div>
 
