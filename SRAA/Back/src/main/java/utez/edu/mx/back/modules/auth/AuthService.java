@@ -119,7 +119,7 @@ public class AuthService {
         LoginResponseDTO response = new LoginResponseDTO(
                 token,
                 rolFront,
-                user.getIdUsuario(),
+                user.getIdReferencia(),
                 nombre,
                 user.getCorreo()
         );

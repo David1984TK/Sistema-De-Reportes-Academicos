@@ -1,24 +1,11 @@
 -- ============================================================
 --  SGAA — Sistema de Gestión de Actividades Académicas
---  schema.sql — Se ejecuta al iniciar Spring Boot
+--  schema.sql — Solo referencia. NO se ejecuta automaticamente.
+--  spring.sql.init.mode=never en application.properties.
+--  El schema lo gestiona Hibernate (ddl-auto=update).
 -- ============================================================
 
 SET FOREIGN_KEY_CHECKS = 0;
-
--- Limpiar tablas existentes con estructura incorrecta
-DROP TABLE IF EXISTS AUDITORIA;
-DROP TABLE IF EXISTS ARCHIVO;
-DROP TABLE IF EXISTS PARTICIPANTE_PDD;
-DROP TABLE IF EXISTS REPORTE_PDD;
-DROP TABLE IF EXISTS PARTICIPACION_PROGRAMA;
-DROP TABLE IF EXISTS ESTADISTICAS_DOCENTES_ACTIVIDAD;
-DROP TABLE IF EXISTS ESTADISTICAS_ESTUDIANTES;
-DROP TABLE IF EXISTS RESPONSABLE_ACTIVIDAD;
-DROP TABLE IF EXISTS ACTIVIDAD;
-DROP TABLE IF EXISTS USUARIOS_LOGIN;
-DROP TABLE IF EXISTS DOCENTE_PERSONAL;
-DROP TABLE IF EXISTS ADMINISTRADOR;
-DROP TABLE IF EXISTS AREA;
 
 -- CATÁLOGOS
 CREATE TABLE IF NOT EXISTS AREA (

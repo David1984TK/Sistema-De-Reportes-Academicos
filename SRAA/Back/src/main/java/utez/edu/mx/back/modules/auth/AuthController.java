@@ -1,5 +1,6 @@
 package utez.edu.mx.back.modules.auth;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import utez.edu.mx.back.kernel.ApiResponse;
@@ -13,7 +14,7 @@ public class AuthController {
         this.authService = authService;
     }
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse> login(@RequestBody LoginRequestDTO request) {
+    public ResponseEntity<ApiResponse> login(@Valid @RequestBody LoginRequestDTO request) {
         return authService.login(request);
     }
 }

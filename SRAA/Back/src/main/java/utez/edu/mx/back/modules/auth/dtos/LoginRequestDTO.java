@@ -1,7 +1,12 @@
 package utez.edu.mx.back.modules.auth.dtos;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class LoginRequestDTO {
+    @NotBlank(message = "El correo es obligatorio")
     private String correo;
+
+    @NotBlank(message = "La contraseña es obligatoria")
     private String password;
 
     public LoginRequestDTO() {}

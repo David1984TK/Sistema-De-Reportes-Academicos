@@ -3,7 +3,7 @@ package utez.edu.mx.back.modules.admin;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "administrador")
+@Table(name = "ADMINISTRADOR")
 public class Administrador {
 
     @Id
@@ -38,7 +38,4 @@ public class Administrador {
 
     public String getFotoPerfil() { return fotoPerfil; }
     public void setFotoPerfil(String fotoPerfil) { this.fotoPerfil = fotoPerfil; }
-
-    // Alias para compatibilidad con repositorios que usan getId()
-    public Long getId() { return idAdmin; }
 }

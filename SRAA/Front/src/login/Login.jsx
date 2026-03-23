@@ -66,13 +66,8 @@ export default function Login({ setSession }) {
       <div className="root">
         <div className="card">
           <div className="header">
-            <div className="dot-row">
-              <div className="dot dot-1" />
-              <div className="dot dot-2" />
-              <div className="dot dot-3" />
-            </div>
             <div className="title">Iniciar sesión</div>
-            <div className="sub">Sistema de Actividades Académicas</div>
+            <div className="sub">Sistema de Actividades Académicas · UTEZ</div>
           </div>
 
           {success ? (

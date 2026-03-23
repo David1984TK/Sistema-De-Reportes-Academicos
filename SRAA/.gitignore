@@ -1,1 +1,20 @@
-Sistema-De-Reportes-Academicos/
+# Dependencias
+node_modules/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Build
+dist/
+target/
+*.class
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Credenciales locales
+.env
+application-local.properties

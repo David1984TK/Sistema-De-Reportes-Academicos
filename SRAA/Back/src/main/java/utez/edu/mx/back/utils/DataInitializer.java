@@ -1,5 +1,7 @@
 package utez.edu.mx.back.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +15,8 @@ import utez.edu.mx.back.modules.usuarios.UsuariosRepository;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
+
+    private static final Logger log = LoggerFactory.getLogger(DataInitializer.class);
 
     private final AdministradorRepository administradorRepository;
     private final DocenteRepository docenteRepository;
@@ -33,9 +37,18 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
+        try {
+            inicializarAreas();
+            inicializarAdmin();
+            inicializarDocentesPrueba();
+            log.info("DataInitializer completado correctamente.");
+        } catch (Exception e) {
+            log.error("Error en DataInitializer: {}", e.getMessage(), e);
+        }
+    }
 
-        // 0. Crear tabla AREA si no existe (no tiene entidad JPA)
+    private void inicializarAreas() {
         jdbcTemplate.execute("""
             CREATE TABLE IF NOT EXISTS AREA (
                 id_area INT NOT NULL AUTO_INCREMENT,
@@ -45,63 +58,70 @@ public class DataInitializer implements CommandLineRunner {
             )
         """);
 
-        // 1. Crear áreas si no existen
         insertAreaIfNotExists("DACEA");
         insertAreaIfNotExists("DAMI");
         insertAreaIfNotExists("DATEFI");
         insertAreaIfNotExists("DATID");
+    }
 
-        // 2. Crear ADMIN si no existe
-        if (!administradorRepository.existsByCorreo("admin@utez.edu.mx")) {
-            Administrador admin = new Administrador("Administrador General", "admin@utez.edu.mx");
-            Administrador savedAdmin = administradorRepository.save(admin);
-
-            UsuariosLogin userAdmin = new UsuariosLogin();
-            userAdmin.setCorreo("admin@utez.edu.mx");
-            userAdmin.setPassword(passwordEncoder.encode("Admin123!"));
-            userAdmin.setRol(UsuariosLogin.Rol.ADMIN);
-            userAdmin.setIdReferencia(savedAdmin.getIdAdmin());
-            userAdmin.setActivo(true);
-            usuariosRepository.save(userAdmin);
+    private void inicializarAdmin() {
+        if (administradorRepository.existsByCorreo("admin@utez.edu.mx")) {
+            log.info("Admin ya existe, se omite creacion.");
+            return;
         }
 
-        // 3. Crear DOCENTE 1 si no existe
-        if (!docenteRepository.existsByCorreo("docentev@utez.edu.mx")) {
-            DocentePersonal docente1 = new DocentePersonal();
-            docente1.setNombre("Docente");
-            docente1.setApellidoPaterno("V1");
-            docente1.setCorreo("docentev@utez.edu.mx");
-            docente1.setIdArea(1L);
-            docente1.setActivo(true);
-            DocentePersonal savedDocente1 = docenteRepository.save(docente1);
+        Administrador admin = new Administrador("Administrador General", "admin@utez.edu.mx");
+        Administrador savedAdmin = administradorRepository.save(admin);
 
-            UsuariosLogin userDocente1 = new UsuariosLogin();
-            userDocente1.setCorreo("docentev@utez.edu.mx");
-            userDocente1.setPassword(passwordEncoder.encode("Docente123!"));
-            userDocente1.setRol(UsuariosLogin.Rol.DOCENTE);
-            userDocente1.setIdReferencia(savedDocente1.getIdDocente());
-            userDocente1.setActivo(true);
-            usuariosRepository.save(userDocente1);
+        UsuariosLogin userAdmin = new UsuariosLogin();
+        userAdmin.setCorreo("admin@utez.edu.mx");
+        userAdmin.setPassword(passwordEncoder.encode("Admin123!"));
+        userAdmin.setRol(UsuariosLogin.Rol.ADMIN);
+        userAdmin.setIdReferencia(savedAdmin.getIdAdmin());
+        userAdmin.setActivo(true);
+        usuariosRepository.save(userAdmin);
+
+        log.info("Admin creado: admin@utez.edu.mx");
+    }
+
+    private void inicializarDocentesPrueba() {
+        crearDocenteIfNotExists(
+            "Carlos", "Mendoza", "Rios",
+            "cmendoza@utez.edu.mx", "Docente Investigador", 1L
+        );
+
+        crearDocenteIfNotExists(
+            "Laura", "Gutierrez", "Vega",
+            "lgutierrez@utez.edu.mx", "Docente de Tiempo Completo", 2L
+        );
+    }
+
+    private void crearDocenteIfNotExists(String nombre, String apellidoP, String apellidoM,
+                                          String correo, String puesto, Long idArea) {
+        if (docenteRepository.existsByCorreo(correo)) {
+            log.info("Docente {} ya existe, se omite creacion.", correo);
+            return;
         }
 
-        // 4. Crear DOCENTE 2 si no existe
-        if (!docenteRepository.existsByCorreo("docentez@utez.edu.mx")) {
-            DocentePersonal docente2 = new DocentePersonal();
-            docente2.setNombre("Docente");
-            docente2.setApellidoPaterno("Z");
-            docente2.setCorreo("docentez@utez.edu.mx");
-            docente2.setIdArea(2L);
-            docente2.setActivo(true);
-            DocentePersonal savedDocente2 = docenteRepository.save(docente2);
+        DocentePersonal docente = new DocentePersonal();
+        docente.setNombre(nombre);
+        docente.setApellidoPaterno(apellidoP);
+        docente.setApellidoMaterno(apellidoM);
+        docente.setCorreo(correo);
+        docente.setPuesto(puesto);
+        docente.setIdArea(idArea);
+        docente.setActivo(true);
+        DocentePersonal saved = docenteRepository.save(docente);
 
-            UsuariosLogin userDocente2 = new UsuariosLogin();
-            userDocente2.setCorreo("docentez@utez.edu.mx");
-            userDocente2.setPassword(passwordEncoder.encode("Docente123!"));
-            userDocente2.setRol(UsuariosLogin.Rol.DOCENTE);
-            userDocente2.setIdReferencia(savedDocente2.getIdDocente());
-            userDocente2.setActivo(true);
-            usuariosRepository.save(userDocente2);
-        }
+        UsuariosLogin userDocente = new UsuariosLogin();
+        userDocente.setCorreo(correo);
+        userDocente.setPassword(passwordEncoder.encode("Docente123!"));
+        userDocente.setRol(UsuariosLogin.Rol.DOCENTE);
+        userDocente.setIdReferencia(saved.getIdDocente());
+        userDocente.setActivo(true);
+        usuariosRepository.save(userDocente);
+
+        log.info("Docente creado: {}", correo);
     }
 
     private void insertAreaIfNotExists(String nombre) {
@@ -110,6 +130,7 @@ public class DataInitializer implements CommandLineRunner {
         );
         if (count == null || count == 0) {
             jdbcTemplate.update("INSERT INTO AREA (nombre) VALUES (?)", nombre);
+            log.info("Area insertada: {}", nombre);
         }
     }
 }
