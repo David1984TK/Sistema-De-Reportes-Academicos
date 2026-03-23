@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import utez.edu.mx.back.kernel.ApiResponse;
 import utez.edu.mx.back.modules.admin.AdministradorRepository;
+import utez.edu.mx.back.modules.auth.dtos.CambiarPasswordDTO;
 import utez.edu.mx.back.modules.auth.dtos.LoginRequestDTO;
 import utez.edu.mx.back.modules.auth.dtos.LoginResponseDTO;
 import utez.edu.mx.back.modules.docente.DocenteRepository;
@@ -128,6 +129,43 @@ public class AuthService {
                 new ApiResponse("Login exitoso", response, HttpStatus.OK),
                 HttpStatus.OK
         );
+    }
+
+    @Transactional
+    public ResponseEntity<ApiResponse> cambiarPassword(String correo, CambiarPasswordDTO dto) {
+        Optional<UsuariosLogin> optionalUser = usuariosRepository.findByCorreo(correo);
+        if (optionalUser.isEmpty()) {
+            return new ResponseEntity<>(
+                    new ApiResponse("Usuario no encontrado", true, HttpStatus.NOT_FOUND),
+                    HttpStatus.NOT_FOUND);
+        }
+
+        UsuariosLogin user = optionalUser.get();
+
+        if (!passwordEncoder.matches(dto.getPasswordActual(), user.getPassword())) {
+            return new ResponseEntity<>(
+                    new ApiResponse("La contrasena actual es incorrecta", true, HttpStatus.BAD_REQUEST),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        if (!dto.getPasswordNueva().equals(dto.getPasswordConfirmar())) {
+            return new ResponseEntity<>(
+                    new ApiResponse("Las contrasenas nuevas no coinciden", true, HttpStatus.BAD_REQUEST),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        if (passwordEncoder.matches(dto.getPasswordNueva(), user.getPassword())) {
+            return new ResponseEntity<>(
+                    new ApiResponse("La nueva contrasena no puede ser igual a la actual", true, HttpStatus.BAD_REQUEST),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        user.setPassword(passwordEncoder.encode(dto.getPasswordNueva()));
+        usuariosRepository.save(user);
+
+        return new ResponseEntity<>(
+                new ApiResponse("Contrasena actualizada correctamente", null, HttpStatus.OK),
+                HttpStatus.OK);
     }
 
     private String obtenerNombrePorReferencia(UsuariosLogin user) {
