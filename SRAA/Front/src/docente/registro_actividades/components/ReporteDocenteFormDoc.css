@@ -83,6 +83,49 @@
   gap: 10px;
 }
 
+.rdfd__participante-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.rdfd__participante-row .rdfd__input {
+  flex: 1;
+}
+
+.rdfd__input--select {
+  max-width: 160px;
+  cursor: pointer;
+  background: #fff;
+}
+
+.rdfd__remove-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #fff;
+  color: #ef4444;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.rdfd__dropzone-selected {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+.rdfd__save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .rdfd__add-docente {
   height: 38px;
   border: 2px solid #cbd5e1;
