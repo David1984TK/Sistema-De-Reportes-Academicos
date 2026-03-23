@@ -54,8 +54,7 @@ export default function ActividadesAcademicas() {
   };
 
   const handleDescargar = (actividad) => {
-    // por ahora solo avisa, cuando el endpoint de generacion este listo se conecta
-    alert(`Descarga de reporte ${actividad.tipoReporte} aun no disponible`);
+    console.log("Descargar reporte:", actividad.tipoReporte, actividad);
   };
 
   const handleBuscar = (filtros) => {
