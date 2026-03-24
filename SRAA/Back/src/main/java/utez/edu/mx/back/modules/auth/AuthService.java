@@ -142,7 +142,7 @@ public class AuthService {
 
         UsuariosLogin user = optionalUser.get();
 
-        if (!passwordEncoder.matches(dto.getPasswordActual(), user.getPassword())) {
+        if (!dto.getPasswordActual().equals(user.getPassword())) {
             return new ResponseEntity<>(
                     new ApiResponse("La contrasena actual es incorrecta", true, HttpStatus.BAD_REQUEST),
                     HttpStatus.BAD_REQUEST);
@@ -154,13 +154,13 @@ public class AuthService {
                     HttpStatus.BAD_REQUEST);
         }
 
-        if (passwordEncoder.matches(dto.getPasswordNueva(), user.getPassword())) {
+        if (dto.getPasswordNueva().equals(user.getPassword())) {
             return new ResponseEntity<>(
                     new ApiResponse("La nueva contrasena no puede ser igual a la actual", true, HttpStatus.BAD_REQUEST),
                     HttpStatus.BAD_REQUEST);
         }
 
-        user.setPassword(passwordEncoder.encode(dto.getPasswordNueva()));
+        user.setPassword(dto.getPasswordNueva());
         usuariosRepository.save(user);
 
         return new ResponseEntity<>(

@@ -75,7 +75,7 @@ public class DataInitializer implements CommandLineRunner {
 
         UsuariosLogin userAdmin = new UsuariosLogin();
         userAdmin.setCorreo("admin@utez.edu.mx");
-        userAdmin.setPassword(passwordEncoder.encode("Admin123!"));
+        userAdmin.setPassword("Admin123!");
         userAdmin.setRol(UsuariosLogin.Rol.ADMIN);
         userAdmin.setIdReferencia(savedAdmin.getIdAdmin());
         userAdmin.setActivo(true);
@@ -115,7 +115,7 @@ public class DataInitializer implements CommandLineRunner {
 
         UsuariosLogin userDocente = new UsuariosLogin();
         userDocente.setCorreo(correo);
-        userDocente.setPassword(passwordEncoder.encode("Docente123!"));
+        userDocente.setPassword("Docente123!");
         userDocente.setRol(UsuariosLogin.Rol.DOCENTE);
         userDocente.setIdReferencia(saved.getIdDocente());
         userDocente.setActivo(true);
